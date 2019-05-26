@@ -1,0 +1,85 @@
+.dia-livre{
+  background-color: rgb(235, 255, 227);
+}
+.dia-ocupado{
+  background-color: rgb(255, 250, 227);
+}
+.n-confirmado {
+  position: relative;
+}
+.n-confirmado::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid rgb(255, 50, 50);
+  border-left: 10px solid transparent;
+}
+.s-confirmado {
+  position: relative;
+}
+.s-confirmado::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid rgb(0, 128, 0);
+  border-left: 10px solid transparent;
+}
+.dia-hoje {
+  background-color: rgb(175, 175, 175);
+}
+.dia-normal {
+  background-color: #d3d3d3;
+}
+.table td, .table th {
+  padding: 2px;
+  font-size: 14px;
+  max-height: 32px;
+}
+.linha-dia{
+  background-color: rgb(201, 201, 201)
+}
+.linha-dia~td {
+  text-align: right;
+  padding-right: 15px;
+  font-weight: 800;
+  font-size: 15px;
+  background-color: rgb(202, 202, 202)
+}
+th.linha-turno {
+  padding: 5px;
+}
+.linha-turno~td {
+  padding: 5px;
+  font-size: 11px;
+  line-height: 13px;
+  width: 125px;
+  max-width: 125px;
+  max-height: 32px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+tr.table-separador {
+  background-color: #e7e7e7;
+}
+tr.table-separador td {
+  padding: 3px;
+}
+@media (max-width: 768px) {
+  .table-reserva {
+    overflow-x: scroll;
+    margin: 0px 15px;
+  }
+}
+.background-home {
+  padding-bottom: 0px;
+}
+#nav-box .container hr:first-child{
+  border-color: transparent;
+}

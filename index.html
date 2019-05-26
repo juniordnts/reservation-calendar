@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" href="assets/images/icon.ico">
+  <title></title>
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+    crossorigin="anonymous">
+</head>
+
+<body>
+
+  <!-------- Conteúdo -------->
+
+  <div class="table-reserva d-flex justify-content-md-center">
+    <div id="reservation-calendar">
+    </div>
+  </div>
+  
+
+
+
+  <!-------- Javascript -------->
+
+  <script src="assets/js/jquery-3.3.1.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+
+  <script>
+
+    var _data = {
+      12 : {
+        manha: "Um agendamento aqui",
+        tarde: "Um agendamento aqui"
+      },
+      18 : {
+        noite: "Um agendamento aqui"
+      },
+      23 : {
+        tarde: "Um agendamento aqui",
+        noite: "Um agendamento aqui"
+      }
+    }
+
+    class ReservationCalendar{
+      constructor(data = {
+        element: "reservation-calendar",
+        today: new Date(),
+      }){
+        this.element = data.element
+        this.today = data.today
+        this._createStruct()
+      }
+
+      _createStruct(){
+        let template = `
+          <table class="table table-bordered text-center col-md-12 table-hover"><thead class="thead-dark"><tr><th scope="col"></th><th scope="col">Domingo</th><th scope="col">Segunda</th><th scope="col">Terça</th><th scope="col">Quarta</th><th scope="col">Quinta</th><th scope="col">Sexta</th><th scope="col">Sábado</th></tr></thead><tbody><tr data-parent="1" class="tr-dia"><th id="semana-1" class="linha-dia" scope="row">Dia</th><td data-sem="0"></td><td data-sem="1"></td><td data-sem="2"></td><td data-sem="3"></td><td data-sem="4"></td><td data-sem="5"></td><td data-sem="6"></td></tr><tr data-parent="1" data-turno="M"><th class="linha-turno" scope="row">Manhã</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="1" data-turno="T"><th class="linha-turno" scope="row">Tarde</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="1" data-turno="N"><th class="linha-turno" scope="row">Noite</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr class="table-separador" data-separador="1"><th scope="row"></th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="2" class="tr-dia"><th id="semana-2" class="linha-dia" scope="row">Dia</th><td data-sem="0"></td><td data-sem="1"></td><td data-sem="2"></td><td data-sem="3"></td><td data-sem="4"></td><td data-sem="5"></td><td data-sem="6"></td></tr><tr data-parent="2" data-turno="M"><th class="linha-turno" scope="row">Manhã</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="2" data-turno="T"><th class="linha-turno" scope="row">Tarde</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="2" data-turno="N"><th class="linha-turno" scope="row">Noite</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr class="table-separador" data-separador="2"><th scope="row"></th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="3" class="tr-dia"><th id="semana-3" class="linha-dia" scope="row">Dia</th><td data-sem="0"></td><td data-sem="1"></td><td data-sem="2"></td><td data-sem="3"></td><td data-sem="4"></td><td data-sem="5"></td><td data-sem="6"></td></tr><tr data-parent="3" data-turno="M"><th class="linha-turno" scope="row">Manhã</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="3" data-turno="T"><th class="linha-turno" scope="row">Tarde</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="3" data-turno="N"><th class="linha-turno" scope="row">Noite</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr class="table-separador" data-separador="3"><th scope="row"></th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="4" class="tr-dia"><th id="semana-4" class="linha-dia" scope="row">Dia</th><td data-sem="0"></td><td data-sem="1"></td><td data-sem="2"></td><td data-sem="3"></td><td data-sem="4"></td><td data-sem="5"></td><td data-sem="6"></td></tr><tr data-parent="4" data-turno="M"><th class="linha-turno" scope="row">Manhã</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="4" data-turno="T"><th class="linha-turno" scope="row">Tarde</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="4" data-turno="N"><th class="linha-turno" scope="row">Noite</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr class="table-separador" data-separador="4"><th scope="row"></th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="5" class="tr-dia"><th id="semana-5" class="linha-dia" scope="row">Dia</th><td data-sem="0"></td><td data-sem="1"></td><td data-sem="2"></td><td data-sem="3"></td><td data-sem="4"></td><td data-sem="5"></td><td data-sem="6"></td></tr><tr data-parent="5" data-turno="M"><th class="linha-turno" scope="row">Manhã</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="5" data-turno="T"><th class="linha-turno" scope="row">Tarde</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="5" data-turno="N"><th class="linha-turno" scope="row">Noite</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr class="table-separador" data-separador="5"><th scope="row"></th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="6" class="tr-dia"><th id="semana-6" class="linha-dia" scope="row">Dia</th><td data-sem="0"></td><td data-sem="1"></td><td data-sem="2"></td><td data-sem="3"></td><td data-sem="4"></td><td data-sem="5"></td><td data-sem="6"></td></tr><tr data-parent="6" data-turno="M"><th class="linha-turno" scope="row">Manhã</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="6" data-turno="T"><th class="linha-turno" scope="row">Tarde</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr data-parent="6" data-turno="N"><th class="linha-turno" scope="row">Noite</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr class="table-separador" data-separador="6"><th scope="row"></th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+        `
+        $(`#${this.element}`).html(template)
+        console.log("Struct created!")
+      }
+
+      _formatRealDate(date){
+        let arrayDate = date.split("-")
+        let year = arrayDate[0]
+        let month = arrayDate[1] - 1
+        let day = arrayDate[2]
+        return {year, month, day}
+      }
+
+      _realDate(date){
+        let dateFormated = this._formatRealDate(date)
+        let realDate = new Date(
+          dateFormated.year,
+          dateFormated.month,
+          dateFormated.day
+        )
+        return realDate
+      }
+
+      _formatDaysInMonth(date){
+        let arrayDate = date.split("-")
+        let year = arrayDate[0]
+        let month = arrayDate[1]
+        let day = 0
+        return {year, month, day}
+      }
+
+      _daysInMonth(date){
+        let dateFormated = this._formatDaysInMonth(date)
+        let numberOfDaysInMonth = new Date(
+          dateFormated.year,
+          dateFormated.month,
+          dateFormated.day
+        ).getDate()
+        return numberOfDaysInMonth
+      }
+
+      _formatDayOne(date){
+        let arrayDate = date.split("-")
+        let year = arrayDate[0]
+        let month = arrayDate[1] - 1
+        let day = 1
+        return {year, month, day}
+      }
+
+      _weekNumberDayOne(date){
+        let dateFormated = this._formatDayOne(date)
+        let dayOne = new Date(
+          dateFormated.year,
+          dateFormated.month,
+          dateFormated.day
+        ).getDay()
+        return dayOne
+      }
+
+      _dayBefore(date, daysBefore){
+        let dateFormated = this._formatDayOne(date)
+        let dayBefore = new Date(
+          dateFormated.year,
+          dateFormated.month,
+          dateFormated.day - daysBefore
+        ).getDate()
+        return dayBefore
+      }
+
+      _generateCalendar(date){
+        this._createStruct()
+        let inputDate =  this._realDate(date)
+        let numberDaysInMonth = this._daysInMonth(date)
+        let weekNumberDayOne = this._weekNumberDayOne(date) // 0 to 6
+        let trDia = $(".tr-dia [data-sem]")
+
+        $.each(trDia, (index, value) => {
+          if ((weekNumberDayOne) > index){
+            // trDia[weekNumberDayOne-index].innerText = this._dayBefore(date, index)
+            // let parentId = value.parentElement.getAttribute("data-parent")
+            // let testeM = $(`[data-parent=${parentId}][data-turno=M] td`)
+            // let testeT = $(`[data-parent=${parentId}][data-turno=T] td`)
+            // let testeN = $(`[data-parent=${parentId}][data-turno=N] td`)
+            // testeM[index].style.backgroundColor = '#eaeaea'
+            // testeT[index].style.backgroundColor = '#eaeaea'
+            // testeN[index].style.backgroundColor = '#eaeaea'
+          } else if(index < weekNumberDayOne + numberDaysInMonth) {
+            trDia[index].innerText = index - weekNumberDayOne + 1;
+          } else if (trDia[weekNumberDayOne + numberDaysInMonth - 1].parentElement.getAttribute("data-parent") < value.parentElement.getAttribute("data-parent") ){
+              let dataParentExtra = value.parentElement.getAttribute("data-parent")
+              $(`[data-parent = ${dataParentExtra}]`).remove()
+              $(`[data-separador = ${dataParentExtra}]`).remove()
+              return false;
+            }
+        });
+        
+      }
+
+      _updateReservations(data){
+
+      }
+
+      updateCalendar(data, date){
+
+      }
+
+    }
+    var teste = 0;
+
+
+    a = new ReservationCalendar()
+    a._generateCalendar('2019-05-26')
+  </script>
+
+</body>
+
+</html>
