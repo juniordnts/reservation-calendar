@@ -37,19 +37,36 @@
 
   <script>
 
-    var _data = {
-      12 : {
-        manha: "Um agendamento aqui",
-        tarde: "Um agendamento aqui"
-      },
-      18 : {
-        noite: "Um agendamento aqui"
-      },
-      23 : {
-        tarde: "Um agendamento aqui",
-        noite: "Um agendamento aqui"
-      }
-    }
+    var _data = [
+        { 
+          date: "8-05-2019", 
+          classroom: 1, 
+          event: "Reserva para Aula", 
+          isReserve: true, 
+          shift: "M" 
+        },
+        { 
+          date: "15-05-2019", 
+          classroom: 1, 
+          event: "Reserva para Curso", 
+          isReserve: true, 
+          shift: "T" 
+        },
+        { 
+          date: "18-05-2019", 
+          classroom: 1, 
+          event: "Aula de Biologia", 
+          isReserve: false, 
+          shift: "N" 
+        },
+        { 
+          date: "24-05-2019", 
+          classroom: 1, 
+          event: "Apresentação de TCC", 
+          isReserve: false, 
+          shift: "T" 
+        }
+      ]
 
     class ReservationCalendar{
       constructor(data = {
@@ -163,19 +180,34 @@
       }
 
       _updateReservations(data){
-
+        $.each(data, function (index, value) { 
+          let eventDay = FormatData.extractDay(value.date)
+          let eventWeekDay = $(`.tr-dia td:contains(${eventDay})`).attr("data-sem")
+          let parentNumber = $(`.tr-dia td:contains(${eventDay})`).parent().attr("data-parent")
+          let arrayLine = $(`[data-parent='${parentNumber}'][data-turno='${value.shift}'] td`)
+          arrayLine[eventWeekDay].innerText = value.event
+          arrayLine[eventWeekDay].classList.value = value.isReserve ? "s-confirmado" : "n-confirmado"
+        });
       }
 
       updateCalendar(data, date){
-
+        this._generateCalendar(date)
+        this._updateReservations(data)
       }
 
     }
-    var teste = 0;
 
+    class FormatData{
+      static extractDay(date){
+        let arrayDate = date.split("-")
+        return arrayDate[0]
+      }
+    }
 
+    var x = ""
     a = new ReservationCalendar()
-    a._generateCalendar('2019-05-26')
+    a.updateCalendar(_data, '2019-05-1')
+    
   </script>
 
 </body>
