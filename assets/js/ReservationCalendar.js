@@ -21,7 +21,12 @@ class ReservationCalendar {
     this.varNames = {
       date: "date",
       event: "event",
-      isReserve: "isReserve",
+      status: {
+        name: "status",
+        confirmed: "C",
+        refused: "R",
+        waiting: "W"
+      },
       shift: "shift"
     }
     this.today = new Date()
@@ -49,7 +54,7 @@ class ReservationCalendar {
   }
 
   _setUpCSS() {
-    let _css = `.dia-livre{background-color:#ebffe3}.dia-ocupado{background-color:#fffae3}.n-confirmado{position:relative}.n-confirmado::after{content:"";position:absolute;top:0;right:0;width:0;height:0;border-top:10px solid #ff3232;border-left:10px solid transparent}.s-confirmado{position:relative}.s-confirmado::after{content:"";position:absolute;top:0;right:0;width:0;height:0;border-top:10px solid green;border-left:10px solid transparent}.dia-hoje{background-color:#afafaf}.dia-normal{background-color:#d3d3d3}.table td,.table th{padding:2px;font-size:14px;max-height:32px}.linha-dia{background-color:#c9c9c9}.linha-dia~td{text-align:right;padding-right:15px;font-weight:800;font-size:15px;background-color:#cacaca}th.linha-turno{padding:5px}.linha-turno~td{padding:5px;font-size:11px;line-height:13px;width:125px;max-width:125px;max-height:32px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}tr.table-separador{background-color:#e7e7e7}tr.table-separador td{padding:3px}@media (max-width:768px){.table-reserva{overflow-x:scroll;margin:0 15px}}.background-home{padding-bottom:0}#nav-box .container hr:first-child{border-color:transparent}*{font-family:Raleway,sans-serif}.table td,.table th{vertical-align:middle}`
+    let _css = `.dia-livre{background-color:#ebffe3}.dia-ocupado{background-color:#fffae3}.n-confirmado{position:relative}.n-confirmado::after{content:"";position:absolute;top:0;right:0;width:0;height:0;border-top:10px solid #ff3232;border-left:10px solid transparent}.y-confirmado{position:relative}.y-confirmado::after{content:"";position:absolute;top:0;right:0;width:0;height:0;border-top:10px solid green;border-left:10px solid transparent}.w-confirmado{position:relative}.w-confirmado::after{content:"";position:absolute;top:0;right:0;width:0;height:0;border-top:10px solid #ffc400;border-left:10px solid transparent}.dia-hoje{background-color:#afafaf}.dia-normal{background-color:#d3d3d3}.table td,.table th{padding:2px;font-size:14px;max-height:32px}.linha-dia{background-color:#c9c9c9}.linha-dia~td{text-align:right;padding-right:15px;font-weight:800;font-size:15px;background-color:#cacaca}th.linha-turno{padding:5px}.linha-turno~td{padding:5px;font-size:11px;line-height:13px;width:125px;max-width:125px;max-height:32px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}tr.table-separador{background-color:#e7e7e7}tr.table-separador td{padding:3px}@media (max-width:768px){.table-reserva{overflow-x:scroll;margin:0 15px}}.background-home{padding-bottom:0}#nav-box .container hr:first-child{border-color:transparent}*{font-family:Raleway,sans-serif}.table td,.table th{vertical-align:middle}`
 
     let _head = document.head || document.getElementsByTagName('head')[0]
     let _style = document.createElement('style')
@@ -144,7 +149,7 @@ class ReservationCalendar {
     this._createStruct()
     let inputDate = this._realDate(date)
     let numberDaysInMonth = this._daysInMonth(date)
-    let weekNumberDayOne = this._weekNumberDayOne(date) // 0 to 6
+    let weekNumberDayOne = this._weekNumberDayOne(date)
     let trDia = $(".tr-dia [data-sem]")
 
     $.each(trDia, (index, value) => {
@@ -173,9 +178,24 @@ class ReservationCalendar {
         let parentNumber = $(`.tr-dia td:contains(${eventDay})`).parent().attr("data-parent")
         let arrayLine = $(`[data-parent='${parentNumber}'][data-turno='${value[this.varNames.shift]}'] td`)
         arrayLine[eventWeekDay].innerText = value[this.varNames.event]
-        arrayLine[eventWeekDay].classList.value = value[this.varNames.isReserve] ? "s-confirmado" : "n-confirmado"
+
+        switch (value[this.varNames.status.name]) {
+          case this.varNames.status.confirmed:
+            arrayLine[eventWeekDay].classList.value = "y-confirmado"
+            break;
+          case this.varNames.status.refused:
+            arrayLine[eventWeekDay].classList.value = "n-confirmado"
+            break;
+          case this.varNames.status.waiting:
+            arrayLine[eventWeekDay].classList.value = "w-confirmado"
+            break;
+          default:
+            console.warn(`Default %c'status'%c value of %c'${value[this.varNames.event]}'%c is not correct!`, "font-weight: bold", "font-weight: initial", "font-weight: bold", "font-weight: initial")
+            console.warn("Check the object: ", value)
+            break;
+        }
       } catch {
-        console.warn(` Something went wrong when field 'shift[${value.shift}]' was being filled! Check if this field was setted.`);
+        console.warn(`Something went wrong when field 'shift[${value.shift}]' was being filled! Check if this field was setted.`);
       }
     });
   }

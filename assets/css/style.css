@@ -17,10 +17,10 @@
   border-top: 10px solid rgb(255, 50, 50);
   border-left: 10px solid transparent;
 }
-.s-confirmado {
+.y-confirmado {
   position: relative;
 }
-.s-confirmado::after {
+.y-confirmado::after {
   content: "";
   position: absolute;
   top: 0px;
@@ -28,6 +28,19 @@
   width: 0;
   height: 0;
   border-top: 10px solid rgb(0, 128, 0);
+  border-left: 10px solid transparent;
+}
+.w-confirmado {
+  position: relative;
+}
+.w-confirmado::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid rgb(255, 196, 0);
   border-left: 10px solid transparent;
 }
 .dia-hoje {

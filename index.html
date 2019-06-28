@@ -28,42 +28,42 @@
         date: "8-05-2019",
         classroom: 1,
         evento: "Reserva para Aula",
-        isReserve: true,
+        status: 'A',
         shift: "M"
       },
       {
         date: "15-05-2019",
         classroom: 1,
         evento: "Reserva para Curso",
-        isReserve: true,
+        status: 'E',
         shift: "T"
       },
       {
         date: "18-05-2019",
         classroom: 1,
         evento: "Aula de Biologia",
-        isReserve: false,
+        status: 'R',
         shift: "N"
       },
       {
         date: "24-05-2019",
         classroom: 1,
         evento: "Apresentação de TCC",
-        isReserve: false,
+        status: 'R',
         shift: "T"
       },
       {
         date: "24-05-2019",
         classroom: 1,
         evento: "Festa de Fim de Prova",
-        isReserve: false,
+        status: 'G',
         shift: "N"
       },
       {
         date: "28-05-2019",
         classroom: 1,
-        evento: "Festa de Fim de Prova",
-        isReserve: false,
+        evento: "Festa de Fim de Semestre",
+        status: 'A',
         shift: "N"
       }
     ]
@@ -75,7 +75,12 @@
         varNames: {
           date: "date",
           event: "evento",
-          isReserve: "isReserve",
+          status: {
+            name: "status",
+            confirmed: "A",
+            refused: "R",
+            waiting: "E"
+          },
           shift: "shift"
         }
       })
