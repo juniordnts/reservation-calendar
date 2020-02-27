@@ -7,13 +7,17 @@
   <title>Reservation Calendar</title>
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
 </head>
 
 <body>
 
   <!-------- Conteúdo -------->
 
-  <div id="reservation-calendar"></div>
+  <div class="container">
+    <div id="reservation-calendar"></div>
+  </div>
+
 
   <!-------- Javascript -------->
 
@@ -25,7 +29,7 @@
 
     var _data = [
       {
-        date: "8-05-2019",
+        date: "08-05-2019",
         classroom: 1,
         evento: "Reserva para Aula",
         status: 'A',
@@ -56,7 +60,7 @@
         date: "24-05-2019",
         classroom: 1,
         evento: "Festa de Fim de Prova",
-        status: 'G',
+        status: 'A',
         shift: "N"
       },
       {
@@ -81,11 +85,13 @@
             refused: "R",
             waiting: "E"
           },
-          shift: "shift"
+          shift: {
+            name: "shift"
+          }
         }
       })
 
-    a.updateCalendar(_data, '2019-05-0')
+    a.updateCalendar(_data, '2019-05-00')
 
   </script>
 

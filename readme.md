@@ -99,3 +99,7 @@ var _data = [
     a.updateCalendar(_data, '2019-05-0')
 
 ```
+
+### Example preview:
+
+![Image](image.png)
